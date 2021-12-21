@@ -125,7 +125,12 @@ class Graph:
             with output.open('w') as f:
                 f.write(gv.source)
         else:
-            gv.render(filename)
+            gv.render(
+                outfile=filename,
+                filename=str(filename) + '.gv',
+                cleanup=True,
+                view=False,
+            )
 
     def node(self, cls=None, **attrs):
         '''Add new node to graph'''
