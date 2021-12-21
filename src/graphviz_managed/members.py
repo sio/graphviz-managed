@@ -15,7 +15,7 @@ class Edge:
     def __init__(self, start, end, **attrs):
         self.start = start
         self.end = end
-        self.attrs = Namespace(**attrs)
+        self.attrs = parse_attrs(attrs)
 
     def __repr__(self):
         return f'<{self.__class__.__name__} start={self.start}, end={self.end}, attrs={self.attrs}>'
@@ -26,7 +26,7 @@ class Node:
 
     def __init__(self, graph, **attrs):
         self.graph = graph
-        self.attrs = Namespace(**attrs)
+        self.attrs = parse_attrs(attrs)
 
     def __repr__(self):
         return f'<{self.__class__.__name__} attrs={self.attrs}>'
@@ -81,7 +81,7 @@ class Graph:
                  edge_cls=Edge,
                  edge_attrs=None,
                  **attrs):
-        self.attrs = Namespace(**attrs)
+        self.attrs = parse_attrs(attrs)
         self._graph_cls = graphviz.Digraph if graph_cls is None else graph_cls
         self._node_cls = node_cls
         self._node_attrs = node_attrs if node_attrs is not None else {}
@@ -143,3 +143,11 @@ class Graph:
         e = self._edge_cls(start, end, **attrs)
         self.edges.append(e)
         return e
+
+
+def parse_attrs(dictionary):
+    '''
+    Convert keys and values of a given dictionary to strings
+    Wrap resulting dictionary into a Namespace object
+    '''
+    return Namespace(**{str(k): str(v) for k, v in dictionary.items()})

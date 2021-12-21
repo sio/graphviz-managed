@@ -59,3 +59,19 @@ def test_graph_attrs():
         }
         ''')
     assert render == reference
+
+
+def test_graph_attrs_numbers():
+    '''Check numbers in graph attr values are converted to strings before rendering'''
+    graph = Graph(label='Graph Title', fontsize=20)
+    a = graph.node(label='Node A', penwidth=0.5)
+    b = graph.node(label='Node B')
+    render = graph.render()
+    reference = dedent('''\
+        digraph {
+        	graph [fontsize=20 label="Graph Title"]
+        	NodeA [label="Node A" penwidth=0.5]
+        	NodeB [label="Node B"]
+        }
+        ''')
+    assert render == reference
