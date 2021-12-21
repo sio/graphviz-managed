@@ -14,3 +14,14 @@ Makefile.venv:
 .PHONY: test
 test: | venv $(VENV)/pytest
 	$(VENV)/pytest $(PYTEST_ARGS)
+
+
+.PHONY: package
+package: | venv $(VENV)/build
+	-rm -rv dist
+	$(VENV)/python -m build
+
+
+.PHONY: upload
+upload: package | $(VENV)/twine
+	$(VENV)/twine upload $(TWINE_ARGS) dist/*
