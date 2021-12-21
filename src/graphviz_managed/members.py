@@ -136,16 +136,16 @@ class Graph:
         '''Add new node to graph'''
         if cls is None:
             cls = self._node_cls
-        if not attrs:
-            attrs = self._node_attrs
-        n = cls(graph=self, **attrs)
+        node_attrs = self._node_attrs.copy()
+        node_attrs.update(attrs)
+        n = cls(graph=self, **node_attrs)
         self.nodes.append(n)
         return n
 
     def edge(self, start, end, **attrs):
-        if not attrs:
-            attrs = self._edge_attrs
-        e = self._edge_cls(start, end, **attrs)
+        edge_attrs = self._edge_attrs.copy()
+        edge_attrs.update(attrs)
+        e = self._edge_cls(start, end, **edge_attrs)
         self.edges.append(e)
         return e
 

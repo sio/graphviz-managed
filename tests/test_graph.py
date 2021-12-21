@@ -61,6 +61,24 @@ def test_graph_attrs():
     assert render == reference
 
 
+def test_node_attrs():
+    '''Check that node attrs override the defaults correctly'''
+    nodeattrs = dict(shape='note', label='Default node text')
+    graph = Graph(node_attrs=nodeattrs)
+    a = graph.node()
+    a1 = graph.node()
+    b = graph.node(label='Node B', shape='box')
+    render = graph.render()
+    reference = dedent('''\
+        digraph {
+        	Defaultnodetext [label="Default node text" shape=note]
+        	Defaultnodetext_ [label="Default node text" shape=note]
+        	NodeB [label="Node B" shape=box]
+        }
+        ''')
+    assert render == reference
+
+
 def test_graph_attrs_numbers():
     '''Check numbers in graph attr values are converted to strings before rendering'''
     graph = Graph(label='Graph Title', fontsize=20)
