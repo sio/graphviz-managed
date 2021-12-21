@@ -43,3 +43,19 @@ def test_simple_render():
         }
         ''')
     assert render.strip() == reference.strip()
+
+
+def test_graph_attrs():
+    '''Check that global graph attrs are supported'''
+    graph = Graph(label='Graph Title', labelloc='t', labeljust='l')
+    a = graph.node(label='Node A')
+    b = graph.node(label='Node B')
+    render = graph.render()
+    reference = dedent('''\
+        digraph {
+        	graph [label="Graph Title" labeljust=l labelloc=t]
+        	NodeA [label="Node A"]
+        	NodeB [label="Node B"]
+        }
+        ''')
+    assert render == reference

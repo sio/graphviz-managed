@@ -98,7 +98,8 @@ class Graph:
         gv_kwargs = {}
         if fmt != 'dot':
             gv_kwargs['format'] = fmt
-        gv = self._graph_cls(**vars(self.attrs), **gv_kwargs)
+        gv = self._graph_cls(**gv_kwargs)
+        gv.attr('graph', **vars(self.attrs))
         node_names = set()
         for node in self.nodes:
             if not hasattr(node.attrs, 'name') \
