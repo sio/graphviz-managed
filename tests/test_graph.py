@@ -58,7 +58,7 @@ def test_graph_attrs():
         	NodeB [label="Node B"]
         }
         ''')
-    assert render == reference
+    assert render.strip() == reference.strip()
 
 
 def test_node_attrs():
@@ -76,7 +76,7 @@ def test_node_attrs():
         	NodeB [label="Node B" shape=box]
         }
         ''')
-    assert render == reference
+    assert render.strip() == reference.strip()
 
 
 def test_graph_attrs_numbers():
@@ -92,4 +92,4 @@ def test_graph_attrs_numbers():
         	NodeB [label="Node B"]
         }
         ''')
-    assert render == reference
+    assert render.strip() == reference.strip()
