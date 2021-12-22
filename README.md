@@ -18,6 +18,17 @@ in any way you want.
 [diagrams]: https://diagrams.mingrammer.com/
 
 
+## Installation
+
+graphviz-managed is published at [PyPI], you can install it via pip:
+
+```
+$ pip install graphviz-managed
+```
+
+[PyPI]: https://pypi.org/project/graphviz-managed
+
+
 ## Usage
 
 ### Basic usage
