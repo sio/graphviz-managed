@@ -16,12 +16,14 @@ test: | venv $(VENV)/pytest
 	$(VENV)/pytest $(PYTEST_ARGS)
 
 
-.PHONY: package
-package: | venv $(VENV)/build
+.PHONY: package build
+package build: dist
+dist: src setup.cfg pyproject.toml README.md LICENSE
+dist: | venv $(VENV)/build
 	-rm -rv dist
 	$(VENV)/python -m build
 
 
 .PHONY: upload
-upload: package | $(VENV)/twine
+upload: dist | $(VENV)/twine
 	$(VENV)/twine upload $(TWINE_ARGS) dist/*
