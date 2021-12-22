@@ -6,7 +6,5 @@ a = graph.node(label='Short text')
 b = graph.node(label='Long label that will be wrapped into multiple lines')
 c = graph.node(label='CantWrapSpecialCamelCaseWordsWithoutSpaces')
 d = graph.node(label='CantWrapSpecialCamelCaseWordsWithoutSpaces but can wrap elsewhere')
-a >> b
-b >> c
-c >> d
+a >> b >> c >> d
 graph.render(sys.argv[1])

@@ -30,8 +30,7 @@ graph = Graph(label='<<b>Sample Graph #1</b>>')
 node = graph.node
 foo = node(label='Foo!')
 bar = node(label='BAR', fontcolor='red', penwidth=1.5)
-foo >> bar
-bar >> foo
+foo >> bar >> foo
 graph.render('basic.svg')
 ```
 
@@ -92,9 +91,7 @@ a = graph.node(label='Short text')
 b = graph.node(label='Long label that will be wrapped into multiple lines')
 c = graph.node(label='CantWrapSpecialCamelCaseWordsWithoutSpaces')
 d = graph.node(label='CantWrapSpecialCamelCaseWordsWithoutSpaces but can wrap elsewhere')
-a >> b
-b >> c
-c >> d
+a >> b >> c >> d
 graph.render('labels.svg')
 ```
 
@@ -115,9 +112,7 @@ lb = node(kind='aws.network.ELB', label='lb')
 web = node(kind='aws.compute.EC2', label='web')
 db = node(kind='aws.database.RDS', label='db')
 store = node(kind='aws.storage.S3', label='store')
-lb >> web
-web >> db
-db >> store
+lb >> web >> db >> store
 diag.render('diag.png')
 ```
 
