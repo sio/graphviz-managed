@@ -93,13 +93,24 @@ class Graph:
     def __repr__(self):
         return f'<{self.__class__.__name__} with {len(self.nodes)} nodes, {len(self.edges)} edges>'
 
-    def render(self, fmt='dot', filename=None):
-        '''Render graph'''
-        gv_kwargs = {}
-        if fmt != 'dot':
-            gv_kwargs['format'] = fmt
-        gv = self._graph_cls(**gv_kwargs)
+    def render(self, filename=None, fmt=None):
+        '''
+        Render graph
+
+        Output format will be autodetected based on file extension if not
+        explicitly provided.
+
+        If filename is not provided, this method will render to dot and return
+        the result as string. In all other cases this method returns None.
+        '''
+        if filename is None and fmt is None:
+            fmt = 'dot'
+        if filename is None and fmt != 'dot':
+            raise ValueError(f'cannot render {fmt} without a filename to save to')
+
+        gv = self._graph_cls()
         gv.attr('graph', **vars(self.attrs))
+
         node_names = set()
         for node in self.nodes:
             if not hasattr(node.attrs, 'name') \
@@ -115,16 +126,19 @@ class Graph:
                 head_name=edge.end.attrs.name,
                 **vars(edge.attrs),
             )
+
         if fmt == 'dot' and filename is None:
             return gv.source
-        if filename is None:
-            raise ValueError(f'cannot render {fmt} without a filename to save to')
+
         output = Path(filename)
+        if fmt is None:
+            fmt = output.suffix.lstrip('.').lower()
         output.parent.mkdir(parents=True, exist_ok=True)
         if fmt == 'dot':
             with output.open('w') as f:
                 f.write(gv.source)
         else:
+            gv.format = fmt
             gv.render(
                 outfile=filename,
                 filename=str(filename) + '.gv',
