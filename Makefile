@@ -2,6 +2,9 @@ SETUP_PY=setup.cfg
 REQUIREMENTS_TXT=requirements.dev
 
 
+export PY_COLORS=1
+export FORCE_COLOR=1
+
 include Makefile.venv
 Makefile.venv:
 	curl \
