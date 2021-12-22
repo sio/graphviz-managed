@@ -1,4 +1,7 @@
 import sys
+import graphviz_managed.logging
+graphviz_managed.logging.setup()
+
 from graphviz_managed import Graph
 from graphviz_managed.custom import WrapLongLabelNode
 graph = Graph(node_cls=WrapLongLabelNode, rankdir='LR', node_attrs=dict(shape='box'))

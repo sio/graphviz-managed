@@ -1,4 +1,7 @@
 import sys
+import graphviz_managed.logging
+graphviz_managed.logging.setup()
+
 from graphviz_managed import Graph
 graph = Graph(label='Highlight graph entry points', rankdir='LR')
 node = graph.node

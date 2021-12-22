@@ -8,6 +8,8 @@ import re
 from argparse import Namespace
 from pathlib import Path
 
+from .logging import log
+
 
 class Edge:
     '''Graph edge'''
@@ -21,24 +23,29 @@ class Edge:
         self.end = end
         self.connector = connector
         self.attrs = parse_attrs(attrs)
+        log.debug('Initialized %s', self)
 
     def __repr__(self):
         return f'<{self.__class__.__name__} start={self.start}, end={self.end}, attrs={self.attrs}>'
 
     def __rshift__(self, other):
         '''self >> other'''
+        log.debug(f'rshift {self} >> {other}')
         return self.connector >> other
 
     def __lshift__(self, other):
         '''self << other'''
+        log.debug(f'lshift {self} << {other}')
         return self.connector << other
 
     def __rrshift__(self, other):
         '''other >> self'''
+        log.debug(f'rrshift {other} >> {self}')
         return other >> self.connector
 
     def __rlshift__(self, other):
         '''other << self'''
+        log.debug(f'rlshift {other} << {self}')
         return other << self.connector
 
 
@@ -48,6 +55,7 @@ class Node:
     def __init__(self, graph, **attrs):
         self.graph = graph
         self.attrs = parse_attrs(attrs)
+        log.debug('Initialized %s', self)
 
     def __repr__(self):
         return f'<{self.__class__.__name__} attrs={self.attrs}>'
@@ -79,18 +87,22 @@ class Node:
 
     def __rshift__(self, other):
         '''self >> other'''
+        log.debug(f'rshift {self} >> {other}')
         return self.connect(other)
 
     def __lshift__(self, other):
         '''self << other'''
+        log.debug(f'lshift {self} << {other}')
         return self.connect(other, reverse=True)
 
     def __rrshift__(self, other):
         '''other >> self'''
+        log.debug(f'rrshift {other} >> {self}')
         return self.connect(other, reverse=True)
 
     def __rlshift__(self, other):
         '''other << self'''
+        log.debug(f'rlshift {other} << {self}')
         return self.connect(other)
 
 
@@ -112,6 +124,7 @@ class Graph:
         self._edge_attrs = edge_attrs if edge_attrs is not None else {}
         self.nodes = []
         self.edges = []
+        log.debug('Initialized %s', self)
 
     def __repr__(self):
         return f'<{self.__class__.__name__} with {len(self.nodes)} nodes, {len(self.edges)} edges>'
@@ -166,15 +179,18 @@ class Graph:
         if filename is None and fmt != 'dot':
             raise ValueError(f'cannot render {fmt} without a filename to save to')
 
+        log.debug('Translating to foreign graph: %s', self)
         gv = self._make_foreign_graph()
 
         if fmt == 'dot' and filename is None:
+            log.info('Rendering %s graph to Python string', fmt)
             return self._dot_foreign_graph(gv)
 
         output = Path(filename)
         if fmt is None:
             fmt = output.suffix.lstrip('.').lower()
         output.parent.mkdir(parents=True, exist_ok=True)
+        log.info('Rendering %s graph to %s', fmt, filename)
         if fmt == 'dot':
             with output.open('w') as f:
                 f.write(self._dot_foreign_graph(gv))
