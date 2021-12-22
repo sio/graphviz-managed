@@ -12,13 +12,34 @@ from pathlib import Path
 class Edge:
     '''Graph edge'''
 
-    def __init__(self, start, end, **attrs):
+    def __init__(self, start, end, connector=None, **attrs):
+        if connector is None:
+            connector = end
+        if connector not in {start, end}:
+            raise ValueError('connector value must be one of {start, end}')
         self.start = start
         self.end = end
+        self.connector = connector
         self.attrs = parse_attrs(attrs)
 
     def __repr__(self):
         return f'<{self.__class__.__name__} start={self.start}, end={self.end}, attrs={self.attrs}>'
+
+    def __rshift__(self, other):
+        '''self >> other'''
+        return self.connector >> other
+
+    def __lshift__(self, other):
+        '''self << other'''
+        return self.connector << other
+
+    def __rrshift__(self, other):
+        '''other >> self'''
+        return other >> self.connector
+
+    def __rlshift__(self, other):
+        '''other << self'''
+        return other << self.connector
 
 
 class Node:
@@ -36,6 +57,8 @@ class Node:
         if isinstance(other, list):
             edges = []
             for node in other:
+                if hasattr(node, 'connector'):  # implement support for list of Edges
+                    node = node.connector
                 edge = self.connect(node, reverse=reverse, **attrs)
                 if edge is NotImplemented:
                     return NotImplemented
@@ -51,7 +74,7 @@ class Node:
         else:
             start = other
             end = self
-        edge = self.graph.edge(start, end, **attrs)
+        edge = self.graph.edge(start, end, connector=other, **attrs)
         return edge
 
     def __rshift__(self, other):
