@@ -121,10 +121,9 @@ class Graph:
 
     def _save_foreign_graph(self, foreign, filename, fileformat):
         '''Render foreign graph to a file on disk'''
-        foreign.format = fileformat
         foreign.render(
-            outfile=filename,
-            filename=str(filename) + '.gv',
+            filename=Path(filename).with_suffix(''), # backwards compatible with pypi/graphviz==0.16
+            format = fileformat,
             cleanup=True,
             view=False,
         )
