@@ -20,8 +20,13 @@ test: | venv $(VENV)/pytest
 package build: dist
 dist: src setup.cfg pyproject.toml README.md LICENSE
 dist: | venv $(VENV)/build
-	-rm -rv dist
+	-$(RM) -rv dist
 	$(VENV)/python -m build
+
+
+.PHONY: clean
+clean:
+	-$(RM) -rv dist
 
 
 .PHONY: upload
