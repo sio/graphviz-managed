@@ -1,5 +1,6 @@
 SETUP_PY=setup.cfg
 REQUIREMENTS_TXT=requirements.dev
+PYTEST_ARGS+=-vv
 
 
 export PY_COLORS=1
