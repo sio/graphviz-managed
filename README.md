@@ -124,3 +124,46 @@ diag.render('diag.png')
 [![sample graph output](samples/diag.png)](samples/diag.py)
 
 More samples can be found in [tests/](tests/) directory.
+
+
+## Support and contributing
+
+If you need help with using this library or including it into your project,
+please create **[an issue][issues]**.
+Issues are also the primary venue for reporting bugs and posting feature
+requests. General discussion related to this project is also acceptable and
+very welcome!
+
+In case you wish to contribute code or documentation, feel free to open
+**[a pull request](https://github.com/sio/graphviz-managed/pulls)**. That would
+certainly make my day!
+
+I'm open to dialog and I promise to behave responsibly and treat all
+contributors with respect. Please try to do the same, and treat others the way
+you want to be treated.
+
+If for some reason you'd rather not use the issue tracker, contacting me via
+email is OK too. Please use a descriptive subject line to enhance visibility
+of your message. Also please keep in mind that public discussion channels are
+preferable because that way many other people may benefit from reading past
+conversations. My email is visible under the GitHub profile and in the commit
+log.
+
+[issues]: https://github.com/sio/graphviz-managed/issues
+
+
+## License and copyright
+
+Copyright 2021 Vitaly Potyarkin
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
