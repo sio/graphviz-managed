@@ -12,8 +12,24 @@ Makefile.venv:
 		&& mv Makefile.fetched Makefile.venv
 
 
+ifeq (Windows_NT,$(OS))
+# https://github.com/tox-dev/tox/issues/1550
+export PYTHONIOENCODING=utf-8
+export PYTHONUTF8=1
+endif
+
+
 .PHONY: test
-test: | venv $(VENV)/pytest
+test: test-tox
+
+
+.PHONY: test-tox
+test-tox: | venv $(VENV)/tox
+	$(VENV)/tox $(TOX_ARGS)
+
+
+.PHONY: test-pytest
+test-pytest: | venv $(VENV)/pytest
 	$(VENV)/pytest $(PYTEST_ARGS)
 
 
