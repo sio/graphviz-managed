@@ -100,4 +100,27 @@ graph.render('labels.svg')
 
 [![sample graph output](samples/labels.svg)](samples/labels.py)
 
+### Wrapper for [diagrams] package
+
+graphviz-managed can be extended to support other graph rendering libraries.
+[Here is](src/graphviz_managed/diagrams.py) how it's done for [diagrams].
+Resulting objects may be manipulated in the same way, enjoying all pre-rendering
+freedoms demonstrated above.
+
+```python
+from graphviz_managed.diagrams import Diagram
+diag = Diagram(label='Fancy node templates from https://pypi.org/project/diagrams/', pad=0.1)
+node = diag.node
+lb = node(kind='aws.network.ELB', label='lb')
+web = node(kind='aws.compute.EC2', label='web')
+db = node(kind='aws.database.RDS', label='db')
+store = node(kind='aws.storage.S3', label='store')
+lb >> web
+web >> db
+db >> store
+diag.render('diag.png')
+```
+
+[![sample graph output](samples/diag.png)](samples/diag.py)
+
 More samples can be found in [tests/](tests/) directory.
