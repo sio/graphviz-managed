@@ -16,6 +16,10 @@ test: | venv $(VENV)/pytest
 	$(VENV)/pytest $(PYTEST_ARGS)
 
 
+samples/%.png samples/%.svg: samples/%.py | venv
+	$(VENV)/python $< $@
+
+
 .PHONY: package build
 package build: dist
 dist: src setup.cfg pyproject.toml README.md LICENSE
