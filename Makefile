@@ -1,4 +1,5 @@
 SETUP_PY=setup.cfg
+REQUIREMENTS_TXT=requirements.dev
 
 
 include Makefile.venv
