@@ -24,7 +24,7 @@ def test_samples_rendered():
         suffix = SAMPLES_DEFAULT_RENDER
         if child.stem in SAMPLES_CUSTOM_RENDER:
             suffix = SAMPLES_CUSTOM_RENDER[child.stem]
-        assert child.with_suffix(f'.{suffix}').exists()
+        assert child.with_suffix(f'.{suffix}').exists(), f'render not found for sample: {child}'
     assert samples_count == SAMPLES_COUNT
 
 
@@ -37,7 +37,7 @@ def test_samples_readme():
         if child.suffix != '.py':
             continue
         sample = get_sample(child)
-        assert sample in readme
+        assert sample in readme, f'sample not found in README: {child}'
         samples_count += 1
     assert samples_count == SAMPLES_COUNT
 
