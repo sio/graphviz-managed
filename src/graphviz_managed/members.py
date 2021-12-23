@@ -157,8 +157,11 @@ class Graph:
 
     def _save_foreign_graph(self, foreign, filename, fileformat):
         '''Render foreign graph to a file on disk'''
+        intermediate = Path(filename).with_suffix('') # backwards compatible with pypi/graphviz==0.16
+        if intermediate.exists():
+            raise RuntimeError(f'intermediate Graphviz file already exists: {intermediate}')
         foreign.render(
-            filename=Path(filename).with_suffix(''), # backwards compatible with pypi/graphviz==0.16
+            filename=str(intermediate),
             format = fileformat,
             cleanup=True,
             view=False,
