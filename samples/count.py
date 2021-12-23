@@ -2,6 +2,8 @@ import sys
 import graphviz_managed.logging
 graphviz_managed.logging.setup()
 
+# ---8<--- START SAMPLE ---8<---
+
 from graphviz_managed import Graph
 graph = Graph(label='Highlight graph entry points', rankdir='LR')
 node = graph.node
@@ -30,6 +32,8 @@ for node in graph.nodes:
         node.attrs.fontcolor = 'darkgreen'
         node.attrs.style = 'filled'
         node.attrs.fillcolor = 'beige'
+
+# ---8<--- END SAMPLE ---8<---
 
 # Save output
 graph.render(sys.argv[1])
