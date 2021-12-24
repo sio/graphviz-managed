@@ -1,6 +1,7 @@
 /Makefile.venv
 /.venv
 /.tox
+/.pytest_cache
 
 /dist/
 *.egg-info
